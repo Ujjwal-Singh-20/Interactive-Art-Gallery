@@ -19,6 +19,19 @@ function sortArtworks(criteria) {
     displayArtworks(sortedArtworks);
 }
 
+document.getElementById('search-bar').addEventListener('input', (event) => {
+    const query = event.target.value.toLowerCase();
+    searchArtworks(query);
+});
+
+function searchArtworks(query) {
+    const results = artworks.filter(artwork => 
+        artwork.title.toLowerCase().includes(query) || 
+        artwork.description.toLowerCase().includes(query)
+    );
+    displayArtworks(results);
+}
+
 function displayArtworks() {
     const galleryContainer = document.getElementById('gallery-container');
     galleryContainer.innerHTML = '';
