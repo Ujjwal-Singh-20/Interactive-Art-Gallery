@@ -50,9 +50,52 @@ function displayArtworkDetails(artwork) {
         <h2>${artwork.title}</h2>
         <img src="${artwork.src}" alt="${artwork.title}">
         <p>${artwork.description}</p>
+        <div id="reviews">
+            <h3>Reviews:</h3>
+            <ul id="review-list"></ul>
+            <h4>Add Review</h4>
+            <form id="review-form">
+                <label for="review-text">Review:</label>
+                <textarea id="review-text" required></textarea>
+                <label for="rating">Rating:</label>
+                <input type="number" id="rating" min="1" max="5" required>
+                <button type="submit">Submit Review</button>
+            </form>
+        </div>
     `;
+
+    // Display reviews
+    const reviewList = document.getElementById('review-list');
+    reviewList.innerHTML = '';
+    if (reviews[artwork.id]) {
+        reviews[artwork.id].forEach(review => {
+            reviewList.innerHTML += `<li>${review.text} - Rating: ${review.rating}</li>`;
+        });
+    }
     detailsContainer.style.display = 'block';
+
+    // Handle review submission
+    document.getElementById('review-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const reviewText = document.getElementById('review-text').value;
+        const rating = document.getElementById('rating').value;
+        
+        if (!reviews[artwork.id]) {
+            reviews[artwork.id] = [];
+        }
+        reviews[artwork.id].push({ text: reviewText, rating });
+        displayArtworkDetails(artwork);  // Refresh details view to show new review
+    });
 }
+
+const reviews = {};
+
+document.querySelectorAll('#filter-container button').forEach(button => {
+    button.addEventListener('click', () => {
+        const category = button.getAttribute('data-category');
+        filterArtworks(category);
+    });
+});
 
 document.querySelectorAll('#filter-container button').forEach(button => {
     button.addEventListener('click', () => {
