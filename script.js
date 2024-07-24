@@ -9,6 +9,16 @@ const artworks = [
     { id: 8, title: "La Robotte, the digital art of the living", src: "La Robotte, the digital art of the living.jpg", category: "Digital-art", description: "Whether it’s digital work, 2D animation or paintings, the artist La Robotte gives us an eyeful with each new creation. Very intense, her work gambols between the worlds of natural science and the one of imaginary. Thanks to an artistic technique of scientific precision, she offers spectators a dreamlike journey, beyond reality. If La Robotte brings so much to contemporary digital art, it is because of an incredibly dualistic and surrealist approach. Anchored in a very concrete life yet floating in a mirific universe, her creations are simply breathtaking." }
 ];
 
+document.getElementById('sort-select').addEventListener('change', (event) => {
+    const sortBy = event.target.value;
+    sortArtworks(sortBy);
+});
+
+function sortArtworks(criteria) {
+    const sortedArtworks = [...artworks].sort((a, b) => a[criteria].localeCompare(b[criteria]));
+    displayArtworks(sortedArtworks);
+}
+
 function displayArtworks() {
     const galleryContainer = document.getElementById('gallery-container');
     galleryContainer.innerHTML = '';
