@@ -51,5 +51,18 @@ function filterArtworks(category) {
     });
 }
 
+document.getElementById('add-artwork-form').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const title = document.getElementById('title').value;
+    const src = document.getElementById('src').value;
+    const category = document.getElementById('category').value;
+    const description = document.getElementById('description').value;
+    
+    const newArtwork = { id: artworks.length + 1, title, src, category, description };
+    artworks.push(newArtwork);
+    displayArtworks();
+    document.getElementById('add-artwork-form').reset();
+});
+
 
 displayArtworks();
